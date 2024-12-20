@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "728769064452",
+    "project_id": "read-ease-app",
+    "storage_bucket": "read-ease-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:728769064452:android:bef0587dcaa93c6f6a8f51",
+        "android_client_info": {
+          "package_name": "com.example.read_ease_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-3ZyKT6vUgLA0a4dJABHfqm4qaupjhZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
