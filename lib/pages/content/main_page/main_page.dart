@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
             onPressed: () => context.goNamed(RouteNames.settings),
             icon: SvgPicture.asset(
               'assets/icons/settings.svg',
-              height: 25.h,
+              height:  25.h,
               width: 25.w,
             ),
           ),
