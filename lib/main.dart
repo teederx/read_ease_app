@@ -4,9 +4,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:read_ease_app/config/router_provider.dart';
-import 'package:read_ease_app/config/theme/theme_data.dart';
-import 'firebase_options.dart';
+import 'package:read_ease_app/core/constants/app_colors.dart';
+import 'config/router/router_provider.dart';
+import 'core/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +16,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   
-  print(dotenv.env['WEBAPIKEY']);
   runApp(
     const ProviderScope(
       child: MyApp(),
