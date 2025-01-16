@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../auth_use_case_provider.dart';
+import '../../../../data/usecases_providers/auth/auth_use_case_provider.dart';
+import '../../../../data/usecases_providers/user/user_usecase_provider.dart';
 
 part 'signup_provider.g.dart';
 
@@ -24,11 +25,15 @@ class Signup extends _$Signup {
     state = const AsyncLoading<void>();
     final key = _key;
 
-    // ignore: avoid_manual_providers_as_generated_provider_dependency
     final authUseCase = ref.read(authUseCaseProvider);
+    final userUseCase = ref.read(userUsecaseProvider);
 
     try {
       await authUseCase.signUp(name, email, password);
+      final user = authUseCase.currentUser;
+      if (user != null) {
+        await userUseCase.syncProfileToLocalDatabase();
+      }
       if (key == _key) {
         state = const AsyncData(null);
       }

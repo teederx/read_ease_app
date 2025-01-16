@@ -3,6 +3,53 @@
 part of 'app_user.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class AppUserImplAdapter extends TypeAdapter<_$AppUserImpl> {
+  @override
+  final int typeId = 0;
+
+  @override
+  _$AppUserImpl read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return _$AppUserImpl(
+      userID: fields[0] as String,
+      name: fields[1] as String,
+      email: fields[2] as String,
+      books: (fields[3] as List).cast<Book>(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, _$AppUserImpl obj) {
+    writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.userID)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.email)
+      ..writeByte(3)
+      ..write(obj.books);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AppUserImplAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+// **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
@@ -22,23 +69,4 @@ Map<String, dynamic> _$$AppUserImplToJson(_$AppUserImpl instance) =>
       'name': instance.name,
       'email': instance.email,
       'books': instance.books.map((e) => e.toJson()).toList(),
-    };
-
-_$BookImpl _$$BookImplFromJson(Map<String, dynamic> json) => _$BookImpl(
-      bookID: json['bookID'] as String? ?? '',
-      imageURL: json['imageURL'] as String? ?? '',
-      title: json['title'] as String? ?? '',
-      desc: json['desc'] as String? ?? '',
-      notes: json['notes'] as String? ?? '',
-      isFavorite: json['isFavorite'] as bool? ?? false,
-    );
-
-Map<String, dynamic> _$$BookImplToJson(_$BookImpl instance) =>
-    <String, dynamic>{
-      'bookID': instance.bookID,
-      'imageURL': instance.imageURL,
-      'title': instance.title,
-      'desc': instance.desc,
-      'notes': instance.notes,
-      'isFavorite': instance.isFavorite,
     };

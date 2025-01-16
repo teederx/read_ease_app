@@ -1,6 +1,9 @@
+import 'package:read_ease_app/features/books/data/usecases_providers/user/user_usecase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../auth_use_case_provider.dart';
+import '../../../../data/usecases_providers/auth/auth_use_case_provider.dart';
+
+ 
 
 part 'signin_provider.g.dart';
 
@@ -25,11 +28,16 @@ class Signin extends _$Signin {
 
     final key = _key;
 
-    // ignore: avoid_manual_providers_as_generated_provider_dependency
+    
     final authUseCase = ref.read(authUseCaseProvider);
+    final userUseCase = ref.read(userUsecaseProvider);
 
     try {
       await authUseCase.signIn(email, password);
+      final user = authUseCase.currentUser;
+      if(user!= null){
+        await userUseCase.syncProfileToLocalDatabase();
+      }
       if (key == _key) {
         state = const AsyncData(null);
       }

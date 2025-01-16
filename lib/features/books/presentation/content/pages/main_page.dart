@@ -52,7 +52,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       appBar: AppBar(
         leading: Builder(builder: (context) {
           return IconButton(
@@ -97,11 +96,11 @@ class _MainPageState extends State<MainPage> {
       ),
       drawer: const MyDrawer(),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () => context.goNamed(RouteNames.addNewBook),
         label: const Text('Add Book'),
         icon: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: MyBottomBar(
         selectedIndex: _selectedIndex,
         selectIndex: selectIndex,

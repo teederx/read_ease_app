@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../core/constants/firebase_constants.dart';
-import '../../domain/repositories/iauth_repo.dart';
-import 'handle_exception.dart';
+import '../../../../../core/constants/firebase_constants.dart';
+import '../../../domain/repositories/iauth_repo.dart';
+import '../handle_exception.dart';
+import '../profile_repository/profile_repository.dart';
 
 class AuthRepository implements IAuthRepository {
+  final ProfileRepository profileRepository;
+  AuthRepository(this.profileRepository);
+
   @override
   User? get currentUser => fbAuth.currentUser;
 
@@ -28,16 +32,20 @@ class AuthRepository implements IAuthRepository {
           'email': email,
           'books': [
             {
+              'bookID': '1',
               'imageURL': '',
               'title': 'Test1',
               'description': 'Test1 desc',
-              'isFavorite' : true,
+              'isFavorite': true,
+              'author': 'Tester 1',
             },
             {
+              'bookID': '2',
               'imageURL': '',
-              'title': 'Test1',
-              'description': 'Test1 desc',
-              'isFavorite' : true,
+              'title': 'Test2',
+              'description': 'Test2 desc',
+              'isFavorite': true,
+              'author': 'Tester 1',
             },
           ],
         },
@@ -122,6 +130,16 @@ class AuthRepository implements IAuthRepository {
           password: password,
         ),
       );
+    } catch (e) {
+      handleException(e);
+    }
+  }
+
+  @override
+  Future<void> syncProfileToCloud() async {
+    final uid = fbAuth.currentUser!.uid;
+    try {
+      await profileRepository.syncWithCloud(uid: uid);
     } catch (e) {
       handleException(e);
     }

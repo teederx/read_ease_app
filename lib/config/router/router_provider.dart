@@ -3,15 +3,20 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_ease_app/features/books/presentation/auth/pages/signin_page.dart';
 import 'package:read_ease_app/features/books/presentation/content/pages/change_password.dart';
+import 'package:read_ease_app/features/books/presentation/content/pages/edit_book_page.dart';
 import 'package:read_ease_app/features/books/presentation/content/pages/settings_page.dart';
 import 'package:read_ease_app/core/firebase_error_page.dart';
 import 'package:read_ease_app/features/books/presentation/splash_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/books/data/repositories/auth_repository_provider.dart';
+import '../../features/books/data/models/book/book.dart';
+import '../../features/books/data/repositories/auth_repository/auth_repository_provider.dart';
 import '../../features/books/presentation/auth/pages/reset_password_page.dart';
 import '../../features/books/presentation/auth/pages/signup_page.dart';
+import '../../features/books/presentation/content/pages/add_new_book.dart';
+import '../../features/books/presentation/content/pages/edit_notes_page.dart';
 import '../../features/books/presentation/content/pages/main_page.dart';
+import '../../features/books/presentation/content/pages/view_book_page.dart';
 import '../../features/books/presentation/page_not_found.dart';
 import 'route.dart';
 
@@ -28,10 +33,10 @@ GoRouter router(Ref ref) {
       }
       final authenticated = authState.valueOrNull != null;
       if (authenticated) {
-        if (state.matchedLocation == RoutePaths.signin || state.matchedLocation == RoutePaths.signup) {
+        if (state.matchedLocation == RoutePaths.signin ||
+            state.matchedLocation == RoutePaths.signup) {
           return RoutePaths.main;
         }
-        return null;
       }
       if (!authenticated && state.matchedLocation == RoutePaths.main) {
         return RoutePaths.signin;
@@ -78,6 +83,41 @@ GoRouter router(Ref ref) {
             path: RoutePaths.changePassword,
             name: RouteNames.changePassword,
             builder: (context, state) => const ChangePassword(),
+          ),
+          GoRoute(
+            path: RoutePaths.addNewBook,
+            name: RouteNames.addNewBook,
+            builder: (context, state) => const AddNewBook(),
+          ),
+          GoRoute(
+            path: RoutePaths.editBook,
+            name: RouteNames.editBook,
+            builder: (context, state) {
+              final book = state.extra as Book;
+              return EditBookPage(
+                book: book,
+              );
+            },
+          ),
+          GoRoute(
+            path: RoutePaths.editNotes,
+            name: RouteNames.editNotes,
+            builder: (context, state) {
+              final notes = state.extra as String;
+              return EditNotesPage(
+                notes: notes,
+              );
+            },
+          ),
+          GoRoute(
+            path: RoutePaths.viewBook,
+            name: RouteNames.viewBook,
+            builder: (context, state) {
+              final book = state.extra as Book;
+              return ViewBookPage(
+                book: book,
+              );
+            },
           ),
         ],
       ),
