@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:read_ease_app/core/constants/app_colors.dart';
+import 'package:read_ease_app/features/books/data/usecases_providers/auth/auth_use_case_provider.dart';
+import 'package:read_ease_app/features/books/data/usecases_providers/user/user_usecase_provider.dart';
 
 import '../../../../../core/constants/firebase_constants.dart';
-import '../../../data/repositories/auth_repository_provider.dart';
-import '../providers/profile_provider/profile_provider.dart';
 
 class MyDrawer extends ConsumerWidget {
   const MyDrawer({
@@ -16,7 +16,7 @@ class MyDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final uid = fbAuth.currentUser!.uid;
-    final profileState = ref.watch(profileProvider(uid));
+    final user = ref.watch(userUsecaseProvider).getUser(id: uid);
 
     return Drawer(
       child: ListView(
@@ -42,10 +42,7 @@ class MyDrawer extends ConsumerWidget {
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    profileState.maybeWhen(
-                      data: (appUser) => appUser.name,
-                      orElse: () => 'User',
-                    ),
+                    user!.name.isNotEmpty ? user.name : 'name',
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                       color: AppColors.secondaryColor,
@@ -89,10 +86,7 @@ class MyDrawer extends ConsumerWidget {
               width: 25.w,
             ),
             title: Text(
-              profileState.maybeWhen(
-                data: (appUser) => appUser.email,
-                orElse: () => 'user email',
-              ),
+              user.email.isNotEmpty ? user.email : 'email',
             ),
           ),
           ListTile(
@@ -105,7 +99,12 @@ class MyDrawer extends ConsumerWidget {
               'Logout',
             ),
             onTap: () async {
-              await ref.read(authRepositoryProvider).signOut();
+              //sync user data to cloud
+              await ref.read(authUseCaseProvider).syncProfileToCloud(uid: uid);
+              //Logout user
+              await ref.read(authUseCaseProvider).signOut();
+              //delete user from local database to save space
+              await ref.read(userUsecaseProvider).deleteUser(id: uid);
             },
           ),
         ],

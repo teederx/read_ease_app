@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../core/constants/firebase_constants.dart';
-import '../../domain/repositories/iauth_repo.dart';
-import 'handle_exception.dart';
+import '../../../../../core/constants/firebase_constants.dart';
+import '../../../domain/repositories/iauth_repo.dart';
+import '../handle_exception.dart';
+import '../profile_repository/profile_repository.dart';
 
 class AuthRepository implements IAuthRepository {
+  final ProfileRepository profileRepository;
+  AuthRepository(this.profileRepository);
+
   @override
   User? get currentUser => fbAuth.currentUser;
 
@@ -104,6 +108,8 @@ class AuthRepository implements IAuthRepository {
     }
   } */
 
+  
+
   @override
   Future<void> reloadUser() async {
     try {
@@ -112,6 +118,7 @@ class AuthRepository implements IAuthRepository {
       handleException(e);
     }
   }
+  
 
   @override
   Future<void> reAuthWithCredentials(String email, String password) async {
@@ -122,6 +129,15 @@ class AuthRepository implements IAuthRepository {
           password: password,
         ),
       );
+    } catch (e) {
+      handleException(e);
+    }
+  }
+  
+  @override
+  Future<void> syncProfileToCloud({required String uid}) async{
+    try {
+      await profileRepository.syncWithCloud(uid: uid);
     } catch (e) {
       handleException(e);
     }

@@ -8,7 +8,7 @@ import 'package:read_ease_app/core/firebase_error_page.dart';
 import 'package:read_ease_app/features/books/presentation/splash_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/books/data/repositories/auth_repository_provider.dart';
+import '../../features/books/data/repositories/auth_repository/auth_repository_provider.dart';
 import '../../features/books/presentation/auth/pages/reset_password_page.dart';
 import '../../features/books/presentation/auth/pages/signup_page.dart';
 import '../../features/books/presentation/content/pages/main_page.dart';
@@ -31,7 +31,6 @@ GoRouter router(Ref ref) {
         if (state.matchedLocation == RoutePaths.signin || state.matchedLocation == RoutePaths.signup) {
           return RoutePaths.main;
         }
-        return null;
       }
       if (!authenticated && state.matchedLocation == RoutePaths.main) {
         return RoutePaths.signin;

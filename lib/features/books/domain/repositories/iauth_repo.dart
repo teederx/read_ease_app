@@ -9,4 +9,5 @@ abstract class IAuthRepository {
   Future<void> sendPasswordResetEmail(String email);
   Future<void> reloadUser();
   Future<void> reAuthWithCredentials(String email, String password);
+  Future<void> syncProfileToCloud({required String uid});
 }

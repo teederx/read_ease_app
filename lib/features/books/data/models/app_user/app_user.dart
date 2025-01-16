@@ -1,19 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import '../book/book.dart';
 
 part 'app_user.freezed.dart';
 part 'app_user.g.dart';
 
 @freezed
 class AppUser with _$AppUser {
+  @HiveType(typeId: 0)
   // To call toJson for nested objects as well
   @JsonSerializable(explicitToJson: true)
   const factory AppUser({
-    @Default('') String userID,
-    @Default('') String name,
-    @Default('') String email,
-    required List<Book> books,
+    @HiveField(0) @Default('') String userID,
+    @HiveField(1) @Default('') String name,
+    @HiveField(2) @Default('') String email,
+    @HiveField(3) required List<Book> books,
   }) = _AppUser;
 
   factory AppUser.fromDoc(DocumentSnapshot appUserDoc) {
@@ -32,17 +36,3 @@ class AppUser with _$AppUser {
   factory AppUser.fromJson(Map<String, dynamic> json) => _$AppUserFromJson(json);
 }
 
-@freezed
-class Book with _$Book {
-  @JsonSerializable(createToJson: true)
-  const factory Book({
-    @Default('') String bookID,
-    @Default('') String imageURL,
-    @Default('') String title,
-    @Default('') String desc,
-    @Default('') String notes,
-    @Default(false) bool isFavorite,
-  }) = _Book;
-
-  factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
-}

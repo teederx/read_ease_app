@@ -20,9 +20,13 @@ AppUser _$AppUserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AppUser {
+  @HiveField(0)
   String get userID => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get email => throw _privateConstructorUsedError;
+  @HiveField(3)
   List<Book> get books => throw _privateConstructorUsedError;
 
   /// Serializes this AppUser to a JSON map.
@@ -39,7 +43,11 @@ abstract class $AppUserCopyWith<$Res> {
   factory $AppUserCopyWith(AppUser value, $Res Function(AppUser) then) =
       _$AppUserCopyWithImpl<$Res, AppUser>;
   @useResult
-  $Res call({String userID, String name, String email, List<Book> books});
+  $Res call(
+      {@HiveField(0) String userID,
+      @HiveField(1) String name,
+      @HiveField(2) String email,
+      @HiveField(3) List<Book> books});
 }
 
 /// @nodoc
@@ -90,7 +98,11 @@ abstract class _$$AppUserImplCopyWith<$Res> implements $AppUserCopyWith<$Res> {
       __$$AppUserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userID, String name, String email, List<Book> books});
+  $Res call(
+      {@HiveField(0) String userID,
+      @HiveField(1) String name,
+      @HiveField(2) String email,
+      @HiveField(3) List<Book> books});
 }
 
 /// @nodoc
@@ -134,13 +146,14 @@ class __$$AppUserImplCopyWithImpl<$Res>
 
 /// @nodoc
 
+@HiveType(typeId: 0)
 @JsonSerializable(explicitToJson: true)
 class _$AppUserImpl with DiagnosticableTreeMixin implements _AppUser {
   const _$AppUserImpl(
-      {this.userID = '',
-      this.name = '',
-      this.email = '',
-      required final List<Book> books})
+      {@HiveField(0) this.userID = '',
+      @HiveField(1) this.name = '',
+      @HiveField(2) this.email = '',
+      @HiveField(3) required final List<Book> books})
       : _books = books;
 
   factory _$AppUserImpl.fromJson(Map<String, dynamic> json) =>
@@ -148,15 +161,19 @@ class _$AppUserImpl with DiagnosticableTreeMixin implements _AppUser {
 
   @override
   @JsonKey()
+  @HiveField(0)
   final String userID;
   @override
   @JsonKey()
+  @HiveField(1)
   final String name;
   @override
   @JsonKey()
+  @HiveField(2)
   final String email;
   final List<Book> _books;
   @override
+  @HiveField(3)
   List<Book> get books {
     if (_books is EqualUnmodifiableListView) return _books;
     // ignore: implicit_dynamic_type
@@ -213,20 +230,24 @@ class _$AppUserImpl with DiagnosticableTreeMixin implements _AppUser {
 
 abstract class _AppUser implements AppUser {
   const factory _AppUser(
-      {final String userID,
-      final String name,
-      final String email,
-      required final List<Book> books}) = _$AppUserImpl;
+      {@HiveField(0) final String userID,
+      @HiveField(1) final String name,
+      @HiveField(2) final String email,
+      @HiveField(3) required final List<Book> books}) = _$AppUserImpl;
 
   factory _AppUser.fromJson(Map<String, dynamic> json) = _$AppUserImpl.fromJson;
 
   @override
+  @HiveField(0)
   String get userID;
   @override
+  @HiveField(1)
   String get name;
   @override
+  @HiveField(2)
   String get email;
   @override
+  @HiveField(3)
   List<Book> get books;
 
   /// Create a copy of AppUser
@@ -234,276 +255,5 @@ abstract class _AppUser implements AppUser {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AppUserImplCopyWith<_$AppUserImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Book _$BookFromJson(Map<String, dynamic> json) {
-  return _Book.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Book {
-  String get bookID => throw _privateConstructorUsedError;
-  String get imageURL => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get desc => throw _privateConstructorUsedError;
-  String get notes => throw _privateConstructorUsedError;
-  bool get isFavorite => throw _privateConstructorUsedError;
-
-  /// Serializes this Book to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Book
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BookCopyWith<Book> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BookCopyWith<$Res> {
-  factory $BookCopyWith(Book value, $Res Function(Book) then) =
-      _$BookCopyWithImpl<$Res, Book>;
-  @useResult
-  $Res call(
-      {String bookID,
-      String imageURL,
-      String title,
-      String desc,
-      String notes,
-      bool isFavorite});
-}
-
-/// @nodoc
-class _$BookCopyWithImpl<$Res, $Val extends Book>
-    implements $BookCopyWith<$Res> {
-  _$BookCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Book
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? bookID = null,
-    Object? imageURL = null,
-    Object? title = null,
-    Object? desc = null,
-    Object? notes = null,
-    Object? isFavorite = null,
-  }) {
-    return _then(_value.copyWith(
-      bookID: null == bookID
-          ? _value.bookID
-          : bookID // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageURL: null == imageURL
-          ? _value.imageURL
-          : imageURL // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      desc: null == desc
-          ? _value.desc
-          : desc // ignore: cast_nullable_to_non_nullable
-              as String,
-      notes: null == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String,
-      isFavorite: null == isFavorite
-          ? _value.isFavorite
-          : isFavorite // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$BookImplCopyWith<$Res> implements $BookCopyWith<$Res> {
-  factory _$$BookImplCopyWith(
-          _$BookImpl value, $Res Function(_$BookImpl) then) =
-      __$$BookImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String bookID,
-      String imageURL,
-      String title,
-      String desc,
-      String notes,
-      bool isFavorite});
-}
-
-/// @nodoc
-class __$$BookImplCopyWithImpl<$Res>
-    extends _$BookCopyWithImpl<$Res, _$BookImpl>
-    implements _$$BookImplCopyWith<$Res> {
-  __$$BookImplCopyWithImpl(_$BookImpl _value, $Res Function(_$BookImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Book
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? bookID = null,
-    Object? imageURL = null,
-    Object? title = null,
-    Object? desc = null,
-    Object? notes = null,
-    Object? isFavorite = null,
-  }) {
-    return _then(_$BookImpl(
-      bookID: null == bookID
-          ? _value.bookID
-          : bookID // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageURL: null == imageURL
-          ? _value.imageURL
-          : imageURL // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      desc: null == desc
-          ? _value.desc
-          : desc // ignore: cast_nullable_to_non_nullable
-              as String,
-      notes: null == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String,
-      isFavorite: null == isFavorite
-          ? _value.isFavorite
-          : isFavorite // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-@JsonSerializable(createToJson: true)
-class _$BookImpl with DiagnosticableTreeMixin implements _Book {
-  const _$BookImpl(
-      {this.bookID = '',
-      this.imageURL = '',
-      this.title = '',
-      this.desc = '',
-      this.notes = '',
-      this.isFavorite = false});
-
-  factory _$BookImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BookImplFromJson(json);
-
-  @override
-  @JsonKey()
-  final String bookID;
-  @override
-  @JsonKey()
-  final String imageURL;
-  @override
-  @JsonKey()
-  final String title;
-  @override
-  @JsonKey()
-  final String desc;
-  @override
-  @JsonKey()
-  final String notes;
-  @override
-  @JsonKey()
-  final bool isFavorite;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Book(bookID: $bookID, imageURL: $imageURL, title: $title, desc: $desc, notes: $notes, isFavorite: $isFavorite)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'Book'))
-      ..add(DiagnosticsProperty('bookID', bookID))
-      ..add(DiagnosticsProperty('imageURL', imageURL))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('desc', desc))
-      ..add(DiagnosticsProperty('notes', notes))
-      ..add(DiagnosticsProperty('isFavorite', isFavorite));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BookImpl &&
-            (identical(other.bookID, bookID) || other.bookID == bookID) &&
-            (identical(other.imageURL, imageURL) ||
-                other.imageURL == imageURL) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.desc, desc) || other.desc == desc) &&
-            (identical(other.notes, notes) || other.notes == notes) &&
-            (identical(other.isFavorite, isFavorite) ||
-                other.isFavorite == isFavorite));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, bookID, imageURL, title, desc, notes, isFavorite);
-
-  /// Create a copy of Book
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BookImplCopyWith<_$BookImpl> get copyWith =>
-      __$$BookImplCopyWithImpl<_$BookImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BookImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _Book implements Book {
-  const factory _Book(
-      {final String bookID,
-      final String imageURL,
-      final String title,
-      final String desc,
-      final String notes,
-      final bool isFavorite}) = _$BookImpl;
-
-  factory _Book.fromJson(Map<String, dynamic> json) = _$BookImpl.fromJson;
-
-  @override
-  String get bookID;
-  @override
-  String get imageURL;
-  @override
-  String get title;
-  @override
-  String get desc;
-  @override
-  String get notes;
-  @override
-  bool get isFavorite;
-
-  /// Create a copy of Book
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BookImplCopyWith<_$BookImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

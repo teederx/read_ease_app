@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'signin_provider.dart';
+part of 'book_search_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$signinHash() => r'a2f273c88116b101e78b94ac75d59a61fb96490d';
+String _$bookSearchHash() => r'824f3c0a914be93edde7392f6d25e200d100b8de';
 
-/// See also [Signin].
-@ProviderFor(Signin)
-final signinProvider = AutoDisposeAsyncNotifierProvider<Signin, void>.internal(
-  Signin.new,
-  name: r'signinProvider',
+/// See also [BookSearch].
+@ProviderFor(BookSearch)
+final bookSearchProvider =
+    AutoDisposeNotifierProvider<BookSearch, String>.internal(
+  BookSearch.new,
+  name: r'bookSearchProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$signinHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$bookSearchHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Signin = AutoDisposeAsyncNotifier<void>;
+typedef _$BookSearch = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profile_provider.dart';
+part of 'book_list_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileHash() => r'3f54cbfa8f4037b5a642acb82adfe6230ad950ad';
+String _$bookListHash() => r'6e162d283b479363a4f0f3d7d7e73c60d71fcdde';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,30 +29,39 @@ class _SystemHash {
   }
 }
 
-/// See also [profile].
-@ProviderFor(profile)
-const profileProvider = ProfileFamily();
+abstract class _$BookList
+    extends BuildlessAutoDisposeAsyncNotifier<List<Book>> {
+  late final String userId;
 
-/// See also [profile].
-class ProfileFamily extends Family<AsyncValue<AppUser>> {
-  /// See also [profile].
-  const ProfileFamily();
+  FutureOr<List<Book>> build(
+    String userId,
+  );
+}
 
-  /// See also [profile].
-  ProfileProvider call(
-    String uid,
+/// See also [BookList].
+@ProviderFor(BookList)
+const bookListProvider = BookListFamily();
+
+/// See also [BookList].
+class BookListFamily extends Family<AsyncValue<List<Book>>> {
+  /// See also [BookList].
+  const BookListFamily();
+
+  /// See also [BookList].
+  BookListProvider call(
+    String userId,
   ) {
-    return ProfileProvider(
-      uid,
+    return BookListProvider(
+      userId,
     );
   }
 
   @override
-  ProfileProvider getProviderOverride(
-    covariant ProfileProvider provider,
+  BookListProvider getProviderOverride(
+    covariant BookListProvider provider,
   ) {
     return call(
-      provider.uid,
+      provider.userId,
     );
   }
 
@@ -68,74 +77,80 @@ class ProfileFamily extends Family<AsyncValue<AppUser>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'profileProvider';
+  String? get name => r'bookListProvider';
 }
 
-/// See also [profile].
-class ProfileProvider extends AutoDisposeFutureProvider<AppUser> {
-  /// See also [profile].
-  ProfileProvider(
-    String uid,
+/// See also [BookList].
+class BookListProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<BookList, List<Book>> {
+  /// See also [BookList].
+  BookListProvider(
+    String userId,
   ) : this._internal(
-          (ref) => profile(
-            ref as ProfileRef,
-            uid,
-          ),
-          from: profileProvider,
-          name: r'profileProvider',
+          () => BookList()..userId = userId,
+          from: bookListProvider,
+          name: r'bookListProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$profileHash,
-          dependencies: ProfileFamily._dependencies,
-          allTransitiveDependencies: ProfileFamily._allTransitiveDependencies,
-          uid: uid,
+                  : _$bookListHash,
+          dependencies: BookListFamily._dependencies,
+          allTransitiveDependencies: BookListFamily._allTransitiveDependencies,
+          userId: userId,
         );
 
-  ProfileProvider._internal(
+  BookListProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.uid,
+    required this.userId,
   }) : super.internal();
 
-  final String uid;
+  final String userId;
 
   @override
-  Override overrideWith(
-    FutureOr<AppUser> Function(ProfileRef provider) create,
+  FutureOr<List<Book>> runNotifierBuild(
+    covariant BookList notifier,
   ) {
+    return notifier.build(
+      userId,
+    );
+  }
+
+  @override
+  Override overrideWith(BookList Function() create) {
     return ProviderOverride(
       origin: this,
-      override: ProfileProvider._internal(
-        (ref) => create(ref as ProfileRef),
+      override: BookListProvider._internal(
+        () => create()..userId = userId,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        uid: uid,
+        userId: userId,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<AppUser> createElement() {
-    return _ProfileProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<BookList, List<Book>>
+      createElement() {
+    return _BookListProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ProfileProvider && other.uid == uid;
+    return other is BookListProvider && other.userId == userId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, uid.hashCode);
+    hash = _SystemHash.combine(hash, userId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -143,17 +158,18 @@ class ProfileProvider extends AutoDisposeFutureProvider<AppUser> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ProfileRef on AutoDisposeFutureProviderRef<AppUser> {
-  /// The parameter `uid` of this provider.
-  String get uid;
+mixin BookListRef on AutoDisposeAsyncNotifierProviderRef<List<Book>> {
+  /// The parameter `userId` of this provider.
+  String get userId;
 }
 
-class _ProfileProviderElement extends AutoDisposeFutureProviderElement<AppUser>
-    with ProfileRef {
-  _ProfileProviderElement(super.provider);
+class _BookListProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<BookList, List<Book>>
+    with BookListRef {
+  _BookListProviderElement(super.provider);
 
   @override
-  String get uid => (origin as ProfileProvider).uid;
+  String get userId => (origin as BookListProvider).userId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
