@@ -13,3 +13,15 @@ class UserEntity {
     required this.books,
   });
 }
+
+class UserDetails {
+  final String id;
+  final String name;
+  final String email;
+
+  UserDetails({
+    required this.id,
+    required this.name,
+    required this.email,
+  });
+}

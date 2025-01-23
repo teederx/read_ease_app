@@ -10,6 +10,7 @@ class LocalDataSource {
 
   Future<void> addUser({required AppUser user}) async {
     await userBox.put(user.userID, user);
+    print('$user \n added');
   }
 
   AppUser? getUser({required String id}) {

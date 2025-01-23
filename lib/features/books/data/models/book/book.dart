@@ -18,12 +18,14 @@ class Book with _$Book {
     @HiveField(3) @Default('') String desc,
     @HiveField(4) @Default('') String notes,
     @HiveField(5) @Default(false) bool isFavorite,
+    @HiveField(6) @Default('') String author,
   }) = _Book;
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
 
   factory Book.add({
     required String imageURL,
+    required String author,
     required String title,
     required String desc,
     required String notes,
@@ -31,6 +33,7 @@ class Book with _$Book {
       Book(
         bookID: uuid.v4(),
         imageURL: imageURL,
+        author: author,
         title: title,
         desc: desc,
         notes: notes,

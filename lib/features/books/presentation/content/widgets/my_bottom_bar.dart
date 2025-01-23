@@ -17,10 +17,17 @@ class MyBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
+      padding: EdgeInsets.only(
+        left: 20.w,
+        right: 20.w,
+        top: 15.h,
+        bottom: 10.h,
+      ),
       height: 80.h,
-      color: Colors.transparent,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Card(
-        elevation: 5,
+        margin: EdgeInsets.zero,
+        elevation: 3,
         color: AppColors.primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

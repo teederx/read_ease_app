@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_manual_providers_as_generated_provider_dependency
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../data/usecases_providers/auth/auth_use_case_provider.dart';
 import '../../../../data/usecases_providers/user/user_usecase_provider.dart';
@@ -33,13 +32,12 @@ class Signup extends _$Signup {
       await authUseCase.signUp(name, email, password);
       final user = authUseCase.currentUser;
       if (user != null) {
-        await userUseCase.syncProfileToLocalDatabase(uid: user.uid);
+        await userUseCase.syncProfileToLocalDatabase();
       }
       if (key == _key) {
         state = const AsyncData(null);
       }
     } catch (e, st) {
-      print('err');
       if (key == _key) {
         state = AsyncError(e, st);
       }

@@ -32,16 +32,20 @@ class AuthRepository implements IAuthRepository {
           'email': email,
           'books': [
             {
+              'bookID': '1',
               'imageURL': '',
               'title': 'Test1',
               'description': 'Test1 desc',
-              'isFavorite' : true,
+              'isFavorite': true,
+              'author': 'Tester 1',
             },
             {
+              'bookID': '2',
               'imageURL': '',
-              'title': 'Test1',
-              'description': 'Test1 desc',
-              'isFavorite' : true,
+              'title': 'Test2',
+              'description': 'Test2 desc',
+              'isFavorite': true,
+              'author': 'Tester 1',
             },
           ],
         },
@@ -108,8 +112,6 @@ class AuthRepository implements IAuthRepository {
     }
   } */
 
-  
-
   @override
   Future<void> reloadUser() async {
     try {
@@ -118,7 +120,6 @@ class AuthRepository implements IAuthRepository {
       handleException(e);
     }
   }
-  
 
   @override
   Future<void> reAuthWithCredentials(String email, String password) async {
@@ -133,9 +134,10 @@ class AuthRepository implements IAuthRepository {
       handleException(e);
     }
   }
-  
+
   @override
-  Future<void> syncProfileToCloud({required String uid}) async{
+  Future<void> syncProfileToCloud() async {
+    final uid = fbAuth.currentUser!.uid;
     try {
       await profileRepository.syncWithCloud(uid: uid);
     } catch (e) {

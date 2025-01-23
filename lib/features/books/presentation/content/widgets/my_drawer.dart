@@ -6,7 +6,6 @@ import 'package:read_ease_app/core/constants/app_colors.dart';
 import 'package:read_ease_app/features/books/data/usecases_providers/auth/auth_use_case_provider.dart';
 import 'package:read_ease_app/features/books/data/usecases_providers/user/user_usecase_provider.dart';
 
-import '../../../../../core/constants/firebase_constants.dart';
 
 class MyDrawer extends ConsumerWidget {
   const MyDrawer({
@@ -15,8 +14,7 @@ class MyDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uid = fbAuth.currentUser!.uid;
-    final user = ref.watch(userUsecaseProvider).getUser(id: uid);
+    final user = ref.watch(userUsecaseProvider).getUser();
 
     return Drawer(
       child: ListView(
@@ -100,11 +98,11 @@ class MyDrawer extends ConsumerWidget {
             ),
             onTap: () async {
               //sync user data to cloud
-              await ref.read(authUseCaseProvider).syncProfileToCloud(uid: uid);
+              await ref.read(authUseCaseProvider).syncProfileToCloud();
               //Logout user
               await ref.read(authUseCaseProvider).signOut();
               //delete user from local database to save space
-              await ref.read(userUsecaseProvider).deleteUser(id: uid);
+              await ref.read(userUsecaseProvider).deleteUser();
             },
           ),
         ],

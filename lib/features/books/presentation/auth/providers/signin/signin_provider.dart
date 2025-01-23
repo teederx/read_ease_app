@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_manual_providers_as_generated_provider_dependency
 import 'package:read_ease_app/features/books/data/usecases_providers/user/user_usecase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -37,7 +36,7 @@ class Signin extends _$Signin {
       await authUseCase.signIn(email, password);
       final user = authUseCase.currentUser;
       if(user!= null){
-        await userUseCase.syncProfileToLocalDatabase(uid: user.uid);
+        await userUseCase.syncProfileToLocalDatabase();
       }
       if (key == _key) {
         state = const AsyncData(null);

@@ -7,7 +7,7 @@ part 'book_list_provider.g.dart';
 @riverpod
 class BookList extends _$BookList {
   @override
-  FutureOr<List<Book>> build(String userId) async {
+  FutureOr<List<Book>> build() async {
     return await _getBooks();
   }
 
@@ -16,8 +16,7 @@ class BookList extends _$BookList {
     ref.onDispose(() {
       print('[bookListProvider] disposed');
     });
-    final books =
-        ref.read(userUsecaseProvider).getAllBooksOfUser(userId: userId);
+    final books = ref.read(userUsecaseProvider).getAllBooksOfUser();
     return books ?? [];
   }
 
@@ -25,18 +24,23 @@ class BookList extends _$BookList {
       {required String imageURL,
       required String title,
       required String desc,
+      required String author,
       required String notes}) async {
     state = const AsyncLoading();
+    print('done');
 
     state = await AsyncValue.guard(() async {
-      final newBook =
-          Book.add(imageURL: imageURL, title: title, desc: desc, notes: notes);
+      final newBook = Book.add(
+        imageURL: imageURL,
+        title: title,
+        desc: desc,
+        notes: notes,
+        author: author,
+      );
 
-      await ref
-          .read(userUsecaseProvider)
-          .addBook(userId: userId, newBook: newBook);
+      await ref.read(userUsecaseProvider).addBook(newBook: newBook);
 
-      return [...state.value!, newBook];
+      return [...state.value ?? [], newBook];
     });
   }
 
@@ -44,18 +48,18 @@ class BookList extends _$BookList {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(() async {
-      await ref
-          .read(userUsecaseProvider)
-          .updateBook(userId: userId, updatedBook: updatedBook);
+      await ref.read(userUsecaseProvider).updateBook(updatedBook: updatedBook);
 
       return [
         for (final book in state.value!)
           if (book.bookID == updatedBook.bookID)
             book.copyWith(
-                title: updatedBook.title,
-                imageURL: updatedBook.imageURL,
-                desc: updatedBook.desc,
-                notes: updatedBook.notes)
+              title: updatedBook.title,
+              imageURL: updatedBook.imageURL,
+              desc: updatedBook.desc,
+              notes: updatedBook.notes,
+              author: updatedBook.author,
+            )
           else
             book
       ];
@@ -66,9 +70,7 @@ class BookList extends _$BookList {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(() async {
-      await ref
-          .read(userUsecaseProvider)
-          .toggleFavorites(userId: userId, bookId: bookId);
+      await ref.read(userUsecaseProvider).toggleFavorites(bookId: bookId);
 
       return [
         for (final book in state.value!)
@@ -84,7 +86,7 @@ class BookList extends _$BookList {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(() async {
-      await ref.read(userUsecaseProvider).removeABookOfUser(userId: userId, bookId: bookId);
+      await ref.read(userUsecaseProvider).removeABookOfUser(bookId: bookId);
 
       return [
         for (final book in state.value!)

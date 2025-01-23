@@ -37,7 +37,7 @@ class AuthUseCase {
     return await authRepository.reAuthWithCredentials(email, password);
   }
 
-  Future<void> syncProfileToCloud({required String uid}) async{
-    return await authRepository.syncProfileToCloud(uid: uid);
+  Future<void> syncProfileToCloud() async{
+    return await authRepository.syncProfileToCloud();
   }
 }

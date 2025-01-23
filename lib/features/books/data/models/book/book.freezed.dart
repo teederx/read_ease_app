@@ -32,6 +32,8 @@ mixin _$Book {
   String get notes => throw _privateConstructorUsedError;
   @HiveField(5)
   bool get isFavorite => throw _privateConstructorUsedError;
+  @HiveField(6)
+  String get author => throw _privateConstructorUsedError;
 
   /// Serializes this Book to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +55,8 @@ abstract class $BookCopyWith<$Res> {
       @HiveField(2) String title,
       @HiveField(3) String desc,
       @HiveField(4) String notes,
-      @HiveField(5) bool isFavorite});
+      @HiveField(5) bool isFavorite,
+      @HiveField(6) String author});
 }
 
 /// @nodoc
@@ -77,6 +80,7 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
     Object? desc = null,
     Object? notes = null,
     Object? isFavorite = null,
+    Object? author = null,
   }) {
     return _then(_value.copyWith(
       bookID: null == bookID
@@ -103,6 +107,10 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
               as bool,
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -120,7 +128,8 @@ abstract class _$$BookImplCopyWith<$Res> implements $BookCopyWith<$Res> {
       @HiveField(2) String title,
       @HiveField(3) String desc,
       @HiveField(4) String notes,
-      @HiveField(5) bool isFavorite});
+      @HiveField(5) bool isFavorite,
+      @HiveField(6) String author});
 }
 
 /// @nodoc
@@ -141,6 +150,7 @@ class __$$BookImplCopyWithImpl<$Res>
     Object? desc = null,
     Object? notes = null,
     Object? isFavorite = null,
+    Object? author = null,
   }) {
     return _then(_$BookImpl(
       bookID: null == bookID
@@ -167,6 +177,10 @@ class __$$BookImplCopyWithImpl<$Res>
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
               as bool,
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -182,7 +196,8 @@ class _$BookImpl implements _Book {
       @HiveField(2) this.title = '',
       @HiveField(3) this.desc = '',
       @HiveField(4) this.notes = '',
-      @HiveField(5) this.isFavorite = false});
+      @HiveField(5) this.isFavorite = false,
+      @HiveField(6) this.author = ''});
 
   factory _$BookImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookImplFromJson(json);
@@ -211,10 +226,14 @@ class _$BookImpl implements _Book {
   @JsonKey()
   @HiveField(5)
   final bool isFavorite;
+  @override
+  @JsonKey()
+  @HiveField(6)
+  final String author;
 
   @override
   String toString() {
-    return 'Book(bookID: $bookID, imageURL: $imageURL, title: $title, desc: $desc, notes: $notes, isFavorite: $isFavorite)';
+    return 'Book(bookID: $bookID, imageURL: $imageURL, title: $title, desc: $desc, notes: $notes, isFavorite: $isFavorite, author: $author)';
   }
 
   @override
@@ -229,13 +248,14 @@ class _$BookImpl implements _Book {
             (identical(other.desc, desc) || other.desc == desc) &&
             (identical(other.notes, notes) || other.notes == notes) &&
             (identical(other.isFavorite, isFavorite) ||
-                other.isFavorite == isFavorite));
+                other.isFavorite == isFavorite) &&
+            (identical(other.author, author) || other.author == author));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, bookID, imageURL, title, desc, notes, isFavorite);
+      runtimeType, bookID, imageURL, title, desc, notes, isFavorite, author);
 
   /// Create a copy of Book
   /// with the given fields replaced by the non-null parameter values.
@@ -260,7 +280,8 @@ abstract class _Book implements Book {
       @HiveField(2) final String title,
       @HiveField(3) final String desc,
       @HiveField(4) final String notes,
-      @HiveField(5) final bool isFavorite}) = _$BookImpl;
+      @HiveField(5) final bool isFavorite,
+      @HiveField(6) final String author}) = _$BookImpl;
 
   factory _Book.fromJson(Map<String, dynamic> json) = _$BookImpl.fromJson;
 
@@ -282,6 +303,9 @@ abstract class _Book implements Book {
   @override
   @HiveField(5)
   bool get isFavorite;
+  @override
+  @HiveField(6)
+  String get author;
 
   /// Create a copy of Book
   /// with the given fields replaced by the non-null parameter values.

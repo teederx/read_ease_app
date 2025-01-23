@@ -1,10 +1,13 @@
 import 'package:read_ease_app/features/books/domain/repositories/user_repository.dart';
 import 'package:read_ease_app/features/books/data/src/local_source/local_data_source.dart';
 
+import '../../../../../core/constants/firebase_constants.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../models/book/book.dart';
 import '../../src/data_mapper/user_mapper.dart';
 import '../profile_repository/profile_repository.dart';
+
+final uid = fbAuth.currentUser!.uid;
 
 class UserRepo extends UserRepository {
   final LocalDataSource localDataSource;
@@ -18,8 +21,8 @@ class UserRepo extends UserRepository {
   } */
 
   @override
-  UserEntity? getUser({required String id}) {
-    final appUser = localDataSource.getUser(id: id);
+  UserEntity? getUser() {
+    final appUser = localDataSource.getUser(id: uid);
     if (appUser != null) {
       return UserMapper.toEntity(appUser);
     }else{
@@ -28,8 +31,8 @@ class UserRepo extends UserRepository {
   }
 
   @override
-  Future<void> deleteUser({required String id}) async {
-    await localDataSource.deleteUser(id: id);
+  Future<void> deleteUser() async {
+    await localDataSource.deleteUser(id: uid);
   }
 
   /* List<AppUser> getAllUsers() {
@@ -38,34 +41,34 @@ class UserRepo extends UserRepository {
 
   @override
   Future<void> updateBook(
-      {required String userId, required Book updatedBook}) async {
-    await localDataSource.updateBook(userId: userId, updatedBook: updatedBook);
+      {required Book updatedBook}) async {
+    await localDataSource.updateBook(userId: uid, updatedBook: updatedBook);
   }
 
   @override
-  List<Book>? getAllBooksOfUser({required String userId}) {
-    return localDataSource.getAllBooksOfUser(userId: userId);
+  List<Book>? getAllBooksOfUser() {
+    return localDataSource.getAllBooksOfUser(userId: uid);
   }
 
   @override
-  Future<void> addBook({required String userId, required Book newBook}) async {
-    await localDataSource.addBook(userId: userId, newBook: newBook);
+  Future<void> addBook({required Book newBook}) async {
+    await localDataSource.addBook(userId: uid, newBook: newBook);
   }
 
   @override
   Future<void> removeABookOfUser(
-      {required String userId, required String bookId}) async {
-    await localDataSource.removeABookOfUser(userId: userId, bookId: bookId);
+      {required String bookId}) async {
+    await localDataSource.removeABookOfUser(userId: uid, bookId: bookId);
   }
 
   @override
   Future<void> toggleFavorites(
-      {required String userId, required String bookId}) async {
-    await localDataSource.toggleFavorites(userId: userId, bookId: bookId);
+      { required String bookId}) async {
+    await localDataSource.toggleFavorites(userId: uid, bookId: bookId);
   }
 
   @override
-  Future<void> syncProfileToLocalDatabase({required String uid}) async {
+  Future<void> syncProfileToLocalDatabase() async {
     await profileRepository.syncProfileToLocalDatabase(uid: uid);
   }
 }

@@ -1,45 +1,53 @@
+import '../../../../core/constants/firebase_constants.dart';
 import '../../data/models/book/book.dart';
 import '../entities/user_entity.dart';
 import '../repositories/user_repository.dart';
+
 
 class UserUsecase {
   final UserRepository userRepository;
 
   UserUsecase(this.userRepository);
 
-  UserEntity? getUser ({required String id}) => userRepository.getUser(id: id);
-
-  // Future<void> addUser({required UserEntity user})async{};
-  Future<void> deleteUser({required String id}) async {
-    return await userRepository.deleteUser(id: id);
+  UserDetails? getUser() {
+    final uid = fbAuth.currentUser!.uid;
+    final userRep = userRepository.getUser();
+    return UserDetails(
+      id: uid,
+      name: userRep!.name,
+      email: userRep.email,
+    );
   }
 
-  Future<void> addBook({required String userId, required Book newBook}) async {
-    return await userRepository.addBook(userId: userId, newBook: newBook);
+  // Future<void> addUser({required UserEntity user})async{};
+  Future<void> deleteUser() async {
+    return await userRepository.deleteUser();
+  }
+
+  Future<void> addBook({required Book newBook}) async {
+    return await userRepository.addBook(newBook: newBook);
   }
 
   Future<void> updateBook(
-      {required String userId, required Book updatedBook}) async {
-    return await userRepository.updateBook(
-        userId: userId, updatedBook: updatedBook);
+      {required Book updatedBook}) async {
+    return await userRepository.updateBook(updatedBook: updatedBook);
   }
 
-  List<Book>? getAllBooksOfUser({required String userId}) {
-    return userRepository.getAllBooksOfUser(userId: userId);
+  List<Book>? getAllBooksOfUser() {
+    return userRepository.getAllBooksOfUser();
   }
 
   Future<void> toggleFavorites(
-      {required String userId, required String bookId}) async {
-    return await userRepository.toggleFavorites(userId: userId, bookId: bookId);
+      {required String bookId}) async {
+    return await userRepository.toggleFavorites(bookId: bookId);
   }
 
   Future<void> removeABookOfUser(
-      {required String userId, required String bookId}) async {
-    return await userRepository.removeABookOfUser(
-        userId: userId, bookId: bookId);
+      {required String bookId}) async {
+    return await userRepository.removeABookOfUser(bookId: bookId);
   }
 
-  Future<void> syncProfileToLocalDatabase({required String uid}) async {
-    return await userRepository.syncProfileToLocalDatabase(uid: uid);
+  Future<void> syncProfileToLocalDatabase() async {
+    return await userRepository.syncProfileToLocalDatabase();
   }
 }
