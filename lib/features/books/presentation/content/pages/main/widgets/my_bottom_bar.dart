@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../core/constants/app_colors.dart';
+import '../../../../../../../core/constants/app_colors.dart';
 
 class MyBottomBar extends StatelessWidget {
   const MyBottomBar({
@@ -20,10 +20,10 @@ class MyBottomBar extends StatelessWidget {
       padding: EdgeInsets.only(
         left: 20.w,
         right: 20.w,
-        top: 15.h,
+        top: 0,
         bottom: 10.h,
       ),
-      height: 80.h,
+      height: 60.h,
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Card(
         margin: EdgeInsets.zero,
@@ -73,11 +73,25 @@ class MyBottomBar extends StatelessWidget {
               IconButton(
                 onPressed: () => selectIndex(2),
                 icon: SvgPicture.asset(
-                  'assets/icons/favorites.svg',
-                  height: selectedIndex == 2 ? 25.h : 20.h,
+                  'assets/icons/active.svg',
+                  height: selectedIndex == 2 ? 30.h : 25.h,
                   width: selectedIndex == 2 ? 25.w : 20.w,
                   colorFilter: ColorFilter.mode(
                     selectedIndex == 2
+                        ? AppColors.primaryColor
+                        : AppColors.iconBlack,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () => selectIndex(3),
+                icon: SvgPicture.asset(
+                  'assets/icons/completed.svg',
+                  height: selectedIndex == 3 ? 30.h : 25.h,
+                  width: selectedIndex == 3 ? 25.w : 20.w,
+                  colorFilter: ColorFilter.mode(
+                    selectedIndex == 3
                         ? AppColors.primaryColor
                         : AppColors.iconBlack,
                     BlendMode.srcIn,

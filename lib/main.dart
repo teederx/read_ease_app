@@ -1,5 +1,6 @@
 import 'package:dynamic_path_url_strategy/dynamic_path_url_strategy.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,6 +16,12 @@ import 'core/firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: AppColors.secondaryColor,
+    ),
+  );
 
   setPathUrlStrategy();
   await dotenv.load(fileName: '.env');
@@ -51,8 +58,13 @@ class MyApp extends ConsumerWidget {
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+              appBarTheme: const AppBarTheme(
+                backgroundColor: AppColors.secondaryColor,
+              ),
+              scaffoldBackgroundColor: AppColors.secondaryColor,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: AppColors.primaryColor,
+              ),
               fontFamily: 'Inter',
               useMaterial3: true,
             ),

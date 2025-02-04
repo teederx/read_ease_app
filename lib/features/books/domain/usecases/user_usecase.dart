@@ -3,7 +3,6 @@ import '../../data/models/book/book.dart';
 import '../entities/user_entity.dart';
 import '../repositories/user_repository.dart';
 
-
 class UserUsecase {
   final UserRepository userRepository;
 
@@ -28,22 +27,27 @@ class UserUsecase {
     return await userRepository.addBook(newBook: newBook);
   }
 
-  Future<void> updateBook(
-      {required Book updatedBook}) async {
+  Future<void> updateBook({required Book updatedBook}) async {
     return await userRepository.updateBook(updatedBook: updatedBook);
   }
 
-  List<Book>? getAllBooksOfUser() {
+  Future<void> editNote({required String bookId, required String note}) async {
+    return await userRepository.editNote(bookId: bookId, note: note);
+  }
+
+  Future<List<Book>> getAllBooksOfUser() {
     return userRepository.getAllBooksOfUser();
   }
 
-  Future<void> toggleFavorites(
-      {required String bookId}) async {
+  Future<void> toggleFavorites({required String bookId}) async {
     return await userRepository.toggleFavorites(bookId: bookId);
   }
 
-  Future<void> removeABookOfUser(
-      {required String bookId}) async {
+  Future<void> toggleCompleted({required String bookId}) async {
+    return await userRepository.toggleIsCompleted(bookId: bookId);
+  }
+
+  Future<void> removeABookOfUser({required String bookId}) async {
     return await userRepository.removeABookOfUser(bookId: bookId);
   }
 

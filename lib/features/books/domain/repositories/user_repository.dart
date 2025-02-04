@@ -7,8 +7,10 @@ abstract class UserRepository {
   Future<void> deleteUser();
   Future<void> addBook({required Book newBook});
   Future<void> updateBook({required Book updatedBook});
-  List<Book>? getAllBooksOfUser();
+  Future<void> editNote({required String bookId, required String note});
+  Future<List<Book>> getAllBooksOfUser();
   Future<void> toggleFavorites({required String bookId});
+  Future<void> toggleIsCompleted({required String bookId});
   Future<void> removeABookOfUser({required String bookId});
   Future<void> syncProfileToLocalDatabase();
 }

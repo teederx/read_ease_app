@@ -1,15 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../core/constants/app_colors.dart';
 import '../../../data/models/book/book.dart';
-import '../providers/book_list_provider/book_list_provider.dart';
+import 'book_tiles.dart';
 
-class MyBooksList extends StatelessWidget {
+class MyBooksList extends StatefulWidget {
   const MyBooksList({
     super.key,
     required this.ref,
@@ -20,80 +15,53 @@ class MyBooksList extends StatelessWidget {
   final List<Book> books;
 
   @override
+  State<MyBooksList> createState() => _MyBooksListState();
+}
+
+class _MyBooksListState extends State<MyBooksList> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        final myBook = books[index];
-        final bookID = myBook.bookID;
-        final image = myBook.imageURL;
-        return ListTile(
-          isThreeLine: true,
-          leading: Container(
-            height: 60.h,
-            width: 55.w,
-            decoration: BoxDecoration(
-              color: AppColors.secondaryColor1,
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: image == ''
-                ? SvgPicture.asset(
-                    'assets/icons/book.svg',
-                    fit: BoxFit.fill,
-                  )
-                : Image.memory(
-                      base64Decode(image),
-                      fit: BoxFit.cover,
-                    ),
-          ),
-          title: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  myBook.title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Author: ${myBook.author}',
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12.sp,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          subtitle: Text(
-            myBook.desc,
-            style: TextStyle(
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          trailing: IconButton(
-            onPressed: () => ref
-                .read(bookListProvider.notifier)
-                .toggleFavorite(bookId: bookID),
-            icon: Icon(
-              books[index].isFavorite
-                  ? Icons.favorite_rounded
-                  : Icons.favorite_outline_rounded,
-              color: AppColors.primaryColor,
-            ),
-          ),
-        );
-      },
-      separatorBuilder: (context, _) => const Divider(),
-      itemCount: books.length,
+    return Scrollbar(
+      thickness: 0.5,
+      controller: _scrollController,
+      child: Align(
+        alignment: AlignmentDirectional.topStart,
+        child: ListView.separated(
+          controller: _scrollController,
+          shrinkWrap: true,
+          reverse: true,
+          itemBuilder: (context, index) {
+            final myBook = widget.books[index];
+            final bookID = myBook.bookID;
+            final image = myBook.imageURL;
+            return BookTiles(
+              myBook: myBook,
+              image: image,
+              ref: widget.ref,
+              bookID: bookID,
+            );
+          },
+          separatorBuilder: (context, _) => const Divider(),
+          itemCount: widget.books.length,
+        )..reverse,
+      ),
     );
   }
 }

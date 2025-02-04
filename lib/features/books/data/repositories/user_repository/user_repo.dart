@@ -25,7 +25,7 @@ class UserRepo extends UserRepository {
     final appUser = localDataSource.getUser(id: uid);
     if (appUser != null) {
       return UserMapper.toEntity(appUser);
-    }else{
+    } else {
       return null;
     }
   }
@@ -40,14 +40,22 @@ class UserRepo extends UserRepository {
   } */
 
   @override
-  Future<void> updateBook(
-      {required Book updatedBook}) async {
+  Future<void> updateBook({required Book updatedBook}) async {
     await localDataSource.updateBook(userId: uid, updatedBook: updatedBook);
   }
 
   @override
-  List<Book>? getAllBooksOfUser() {
-    return localDataSource.getAllBooksOfUser(userId: uid);
+  Future<void> editNote({required String bookId, required String note}) async {
+    await localDataSource.editNote(
+      userId: uid,
+      bookId: bookId,
+      note: note,
+    );
+  }
+
+  @override
+  Future<List<Book>> getAllBooksOfUser() async {
+    return await localDataSource.getAllBooksOfUser(userId: uid);
   }
 
   @override
@@ -56,19 +64,22 @@ class UserRepo extends UserRepository {
   }
 
   @override
-  Future<void> removeABookOfUser(
-      {required String bookId}) async {
+  Future<void> removeABookOfUser({required String bookId}) async {
     await localDataSource.removeABookOfUser(userId: uid, bookId: bookId);
   }
 
   @override
-  Future<void> toggleFavorites(
-      { required String bookId}) async {
+  Future<void> toggleFavorites({required String bookId}) async {
     await localDataSource.toggleFavorites(userId: uid, bookId: bookId);
   }
 
   @override
   Future<void> syncProfileToLocalDatabase() async {
     await profileRepository.syncProfileToLocalDatabase(uid: uid);
+  }
+
+  @override
+  Future<void> toggleIsCompleted({required String bookId}) async {
+    await localDataSource.toggleCompleted(userId: uid, bookId: bookId);
   }
 }

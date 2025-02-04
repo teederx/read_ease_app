@@ -2,19 +2,62 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:read_ease_app/core/constants/app_colors.dart';
 import 'package:read_ease_app/features/books/data/usecases_providers/auth/auth_use_case_provider.dart';
 import 'package:read_ease_app/features/books/data/usecases_providers/user/user_usecase_provider.dart';
 
+import '../../../../../../../config/router/route.dart';
+import '../../../../../data/models/book/book.dart';
 
 class MyDrawer extends ConsumerWidget {
   const MyDrawer({
     super.key,
+    required this.bookListState,
   });
+  final AsyncValue<List<Book>> bookListState;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userUsecaseProvider).getUser();
+    final completedNum =
+        bookListState.value!.where((book) => book.isCompleted).toList().length;
+    final totalNum = bookListState.value!.length;
+
+    Future<void> dialog() async {
+      return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog.adaptive(
+            title: const Text('Warning!'),
+            icon: const Icon(
+              Icons.warning_rounded,
+              color: AppColors.primaryColor,
+            ),
+            content: const Text('Do you want to Logout?'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  //Logout user
+                  await ref.read(authUseCaseProvider).signOut();
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context);
+                  //delete user from local database to save space
+                  await ref.read(userUsecaseProvider).deleteUser();
+                },
+                child: const Text('Yes'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return Drawer(
       child: ListView(
@@ -58,7 +101,7 @@ class MyDrawer extends ConsumerWidget {
                     ),
                     5.horizontalSpace,
                     Text(
-                      'PROGRESS: 0 OF 0',
+                      'PROGRESS: $completedNum OF $totalNum',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         color: AppColors.secondaryColor1,
@@ -89,6 +132,22 @@ class MyDrawer extends ConsumerWidget {
           ),
           ListTile(
             leading: SvgPicture.asset(
+              'assets/icons/favorites.svg',
+              height: 25.h,
+              width: 25.w,
+            ),
+            title: const Text(
+              'My favorite books',
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              context.pushNamed(
+                RouteNames.favorite,
+              );
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(
               'assets/icons/logout.svg',
               height: 25.h,
               width: 25.w,
@@ -99,10 +158,8 @@ class MyDrawer extends ConsumerWidget {
             onTap: () async {
               //sync user data to cloud
               await ref.read(authUseCaseProvider).syncProfileToCloud();
-              //Logout user
-              await ref.read(authUseCaseProvider).signOut();
-              //delete user from local database to save space
-              await ref.read(userUsecaseProvider).deleteUser();
+              //confirm user logout
+              dialog();
             },
           ),
         ],

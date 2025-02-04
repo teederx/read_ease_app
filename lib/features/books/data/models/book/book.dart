@@ -1,3 +1,4 @@
+import 'package:flutter_quill/quill_delta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -19,6 +20,7 @@ class Book with _$Book {
     @HiveField(4) @Default('') String notes,
     @HiveField(5) @Default(false) bool isFavorite,
     @HiveField(6) @Default('') String author,
+    @HiveField(7) @Default(false) bool isCompleted,
   }) = _Book;
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
@@ -28,7 +30,7 @@ class Book with _$Book {
     required String author,
     required String title,
     required String desc,
-    required String notes,
+    required Delta notes,
   }) =>
       Book(
         bookID: uuid.v4(),
@@ -36,11 +38,7 @@ class Book with _$Book {
         author: author,
         title: title,
         desc: desc,
-        notes: notes,
+        notes: notes.toJson().toString(),
       );
 }
 
-enum Filter {
-  all,
-  isFavorite,
-}
