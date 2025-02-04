@@ -10,7 +10,6 @@ class LocalDataSource {
 
   Future<void> addUser({required AppUser user}) async {
     await userBox.put(user.userID, user);
-    print('$user \n added');
   }
 
   AppUser? getUser({required String id}) {
@@ -38,12 +37,34 @@ class LocalDataSource {
 
       final updatedUser = user.copyWith(books: updatedBooks);
       await userBox.put(userId, updatedUser);
+      print('Book updated successfully for user: $userId');
+    } else {
+      print('User not found: $userId');
     }
   }
 
-  List<Book>? getAllBooksOfUser({required String userId}) {
+  Future<void> editNote(
+      {required String userId,
+      required String bookId,
+      required String note}) async {
     final user = userBox.get(userId);
-    return user?.books;
+    if (user != null) {
+      final updatedBooks = user.books.map((book) {
+        if (book.bookID == bookId) {
+          return book.copyWith(notes: note);
+        }
+        return book;
+      }).toList();
+
+      final updatedUser = user.copyWith(books: updatedBooks);
+      await userBox.put(userId, updatedUser);
+    }
+  }
+
+  Future<List<Book>> getAllBooksOfUser({required String userId}) async {
+    final user = userBox.get(userId);
+    print('Book gotten');
+    return user?.books ?? [];
   }
 
   Future<void> addBook({required String userId, required Book newBook}) async {
@@ -59,7 +80,8 @@ class LocalDataSource {
       {required String userId, required String bookId}) async {
     final user = userBox.get(userId);
     if (user != null) {
-      final updatedBooks = user.books.where((book) => book.bookID != bookId).toList();
+      final updatedBooks =
+          user.books.where((book) => book.bookID != bookId).toList();
       final updatedUser = user.copyWith(books: updatedBooks);
       await userBox.put(userId, updatedUser);
     }
@@ -72,6 +94,22 @@ class LocalDataSource {
       final updatedBooks = user.books.map((book) {
         if (book.bookID == bookId) {
           return book.copyWith(isFavorite: !book.isFavorite);
+        }
+        return book;
+      }).toList();
+
+      final updatedUser = user.copyWith(books: updatedBooks);
+      await userBox.put(userId, updatedUser);
+    }
+  }
+
+  Future<void> toggleCompleted(
+      {required String userId, required String bookId}) async {
+    final user = userBox.get(userId);
+    if (user != null) {
+      final updatedBooks = user.books.map((book) {
+        if (book.bookID == bookId) {
+          return book.copyWith(isCompleted: !book.isCompleted);
         }
         return book;
       }).toList();

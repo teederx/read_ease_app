@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_quill/quill_delta.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_ease_app/features/books/presentation/auth/pages/signin_page.dart';
@@ -9,14 +10,14 @@ import 'package:read_ease_app/core/firebase_error_page.dart';
 import 'package:read_ease_app/features/books/presentation/splash_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/books/data/models/book/book.dart';
 import '../../features/books/data/repositories/auth_repository/auth_repository_provider.dart';
 import '../../features/books/presentation/auth/pages/reset_password_page.dart';
 import '../../features/books/presentation/auth/pages/signup_page.dart';
 import '../../features/books/presentation/content/pages/add_new_book.dart';
 import '../../features/books/presentation/content/pages/edit_notes_page.dart';
-import '../../features/books/presentation/content/pages/main_page.dart';
-import '../../features/books/presentation/content/pages/view_book_page.dart';
+import '../../features/books/presentation/content/pages/favorites.dart';
+import '../../features/books/presentation/content/pages/main/main_page.dart';
+import '../../features/books/presentation/content/pages/view_book_page/view_book_page.dart';
 import '../../features/books/presentation/page_not_found.dart';
 import 'route.dart';
 
@@ -93,9 +94,9 @@ GoRouter router(Ref ref) {
             path: RoutePaths.editBook,
             name: RouteNames.editBook,
             builder: (context, state) {
-              final book = state.extra as Book;
+              final bookId = state.extra as String;
               return EditBookPage(
-                book: book,
+                bookId: bookId,
               );
             },
           ),
@@ -103,7 +104,7 @@ GoRouter router(Ref ref) {
             path: RoutePaths.editNotes,
             name: RouteNames.editNotes,
             builder: (context, state) {
-              final notes = state.extra as String;
+              final notes = state.extra as Delta;
               return EditNotesPage(
                 notes: notes,
               );
@@ -113,10 +114,17 @@ GoRouter router(Ref ref) {
             path: RoutePaths.viewBook,
             name: RouteNames.viewBook,
             builder: (context, state) {
-              final book = state.extra as Book;
+              final bookId = state.extra as String;
               return ViewBookPage(
-                book: book,
+                bookId: bookId,
               );
+            },
+          ),
+          GoRoute(
+            path: RoutePaths.favorite,
+            name: RouteNames.favorite,
+            builder: (context, state) {
+              return const Favorites();
             },
           ),
         ],

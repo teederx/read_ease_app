@@ -24,13 +24,14 @@ class BookImplAdapter extends TypeAdapter<_$BookImpl> {
       notes: fields[4] as String,
       isFavorite: fields[5] as bool,
       author: fields[6] as String,
+      isCompleted: fields[7] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$BookImpl obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.bookID)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class BookImplAdapter extends TypeAdapter<_$BookImpl> {
       ..writeByte(5)
       ..write(obj.isFavorite)
       ..writeByte(6)
-      ..write(obj.author);
+      ..write(obj.author)
+      ..writeByte(7)
+      ..write(obj.isCompleted);
   }
 
   @override
@@ -70,6 +73,7 @@ _$BookImpl _$$BookImplFromJson(Map<String, dynamic> json) => _$BookImpl(
       notes: json['notes'] as String? ?? '',
       isFavorite: json['isFavorite'] as bool? ?? false,
       author: json['author'] as String? ?? '',
+      isCompleted: json['isCompleted'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$BookImplToJson(_$BookImpl instance) =>
@@ -81,4 +85,5 @@ Map<String, dynamic> _$$BookImplToJson(_$BookImpl instance) =>
       'notes': instance.notes,
       'isFavorite': instance.isFavorite,
       'author': instance.author,
+      'isCompleted': instance.isCompleted,
     };

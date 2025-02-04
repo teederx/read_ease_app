@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Primary and Secondary Colors
-  static const Color primaryColor = Colors.green;
+  static const Color primaryColor = Color.fromRGBO(76, 175, 80, 1);
   static const Color secondaryColor = Colors.white;
+  static const Color accentColor = Color.fromARGB(30, 75, 57, 239);
+  
 
   // Icon Colors
   static const Color iconBlack = Colors.black;

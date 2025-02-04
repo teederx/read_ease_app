@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/quill_delta.dart';
 
 class EditNotesPage extends StatelessWidget {
   const EditNotesPage({
@@ -6,7 +7,7 @@ class EditNotesPage extends StatelessWidget {
     required this.notes,
   });
 
-  final String notes;
+  final Delta notes;
 
   @override
   Widget build(BuildContext context) {
