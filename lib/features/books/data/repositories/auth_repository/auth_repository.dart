@@ -30,24 +30,7 @@ class AuthRepository implements IAuthRepository {
         {
           'name': name,
           'email': email,
-          'books': [
-            {
-              'bookID': '1',
-              'imageURL': '',
-              'title': 'Test1',
-              'description': 'Test1 desc',
-              'isFavorite': true,
-              'author': 'Tester 1',
-            },
-            {
-              'bookID': '2',
-              'imageURL': '',
-              'title': 'Test2',
-              'description': 'Test2 desc',
-              'isFavorite': true,
-              'author': 'Tester 1',
-            },
-          ],
+          'books': [],
         },
       );
     } catch (e) {

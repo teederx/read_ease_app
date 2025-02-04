@@ -1,3 +1,4 @@
+import 'package:flutter_quill/quill_delta.dart';
 import 'package:read_ease_app/features/books/data/models/book/book.dart';
 import 'package:read_ease_app/features/books/data/usecases_providers/user/user_usecase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,25 +17,24 @@ class BookList extends _$BookList {
     ref.onDispose(() {
       print('[bookListProvider] disposed');
     });
-    final books = ref.read(userUsecaseProvider).getAllBooksOfUser();
-    return books ?? [];
+    final books = ref.watch(userUsecaseProvider).getAllBooksOfUser();
+    return books;
   }
 
-  Future<void> addBook(
-      {required String imageURL,
-      required String title,
-      required String desc,
-      required String author,
-      required String notes}) async {
+  Future<void> addBook({
+    required String imageURL,
+    required String title,
+    required String desc,
+    required String author,
+  }) async {
     state = const AsyncLoading();
-    print('done');
 
     state = await AsyncValue.guard(() async {
       final newBook = Book.add(
         imageURL: imageURL,
         title: title,
         desc: desc,
-        notes: notes,
+        notes: Delta(),
         author: author,
       );
 
@@ -53,13 +53,36 @@ class BookList extends _$BookList {
       return [
         for (final book in state.value!)
           if (book.bookID == updatedBook.bookID)
-            book.copyWith(
-              title: updatedBook.title,
-              imageURL: updatedBook.imageURL,
-              desc: updatedBook.desc,
-              notes: updatedBook.notes,
-              author: updatedBook.author,
-            )
+            updatedBook
+          else
+            book
+      ];
+    });
+  }
+
+  Future<void> editNote({required String bookId, required String notes}) async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      await ref.read(userUsecaseProvider).editNote(bookId: bookId, note: notes);
+
+      return [
+        for (final book in state.value!)
+          if (book.bookID == bookId) book.copyWith(notes: notes) else book
+      ];
+    });
+  }
+
+  Future<void> toggleCompleted({required String bookId}) async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      await ref.read(userUsecaseProvider).toggleCompleted(bookId: bookId);
+
+      return [
+        for (final book in state.value!)
+          if (book.bookID == bookId)
+            book.copyWith(isCompleted: !book.isCompleted)
           else
             book
       ];

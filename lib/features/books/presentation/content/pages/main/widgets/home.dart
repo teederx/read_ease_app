@@ -1,23 +1,28 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:read_ease_app/core/constants/app_colors.dart';
 import 'package:read_ease_app/core/utils/app_padding.dart';
-import 'package:read_ease_app/features/books/presentation/content/providers/book_list_provider/book_list_provider.dart';
 
-import '../../../data/models/book/book.dart';
-import '../../../data/models/custom_error/custom_error.dart';
-import '../../../data/usecases_providers/user/user_usecase_provider.dart';
-import 'my_books_list.dart';
-import 'no_books.dart';
+import '../../../../../../../config/router/route_names.dart';
+import '../../../../../data/models/book/book.dart';
+import '../../../../../data/models/custom_error/custom_error.dart';
+import '../../../../../data/usecases_providers/user/user_usecase_provider.dart';
+import '../../../widgets/my_books_list.dart';
+import '../../../widgets/no_data.dart';
 
 class Home extends ConsumerWidget {
-  const Home({super.key});
+  const Home({
+    super.key,
+    required this.bookListState,
+  });
+
+  final AsyncValue<List<Book>> bookListState;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userUsecaseProvider).getUser();
-    final bookListState = ref.watch(bookListProvider);
 
     return Scaffold(
       body: AppPadding(
@@ -38,23 +43,60 @@ class Home extends ConsumerWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w300,
                 fontSize: 13.sp,
+                color: AppColors.secondaryColor2,
               ),
             ),
-            const Text('So let\'s get right into it then.'),
-            30.verticalSpace,
             Text(
-              'Your Collections',
+              'So let\'s get right into it then.',
               style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w300,
+                fontSize: 13.sp,
+                color: AppColors.secondaryColor2,
               ),
+            ),
+            20.verticalSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Your Collections',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                TextButton.icon(
+                  onPressed: () => context.goNamed(RouteNames.addNewBook),
+                  style: TextButton.styleFrom(
+                    elevation: 2,
+                    shadowColor: AppColors.secondaryColor2,
+                    backgroundColor: AppColors.secondaryColor,
+                    foregroundColor: AppColors.primaryColor,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: AppColors.primaryColor,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  label: const Text(
+                    'Add Book',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  icon: const Icon(Icons.add),
+                )
+              ],
             ),
             10.verticalSpace,
             Expanded(
               child: bookListState.when(
                 data: (List<Book> book) {
                   if (book.isEmpty) {
-                    return const NoBooks();
+                    return const NoData(
+                      dataEntry: DataEntry.noBook,
+                    );
                   }
                   return MyBooksList(
                     ref: ref,
