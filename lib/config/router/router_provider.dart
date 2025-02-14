@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_quill/quill_delta.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_ease_app/features/books/presentation/auth/pages/signin_page.dart';
@@ -103,7 +104,7 @@ GoRouter router(Ref ref) {
             path: RoutePaths.editNotes,
             name: RouteNames.editNotes,
             builder: (context, state) {
-              final data = state.extra as List<String>;
+              final notes = state.extra as Delta;
               return EditNotesPage(
                 notes: data[2],
                 title: data[1],
