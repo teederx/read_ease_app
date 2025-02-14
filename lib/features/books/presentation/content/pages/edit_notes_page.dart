@@ -1,16 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:flutter_quill/quill_delta.dart';
 
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/utils/app_padding.dart';
-import '../providers/book_list_provider/book_list_provider.dart';
-
-class EditNotesPage extends ConsumerStatefulWidget {
+class EditNotesPage extends StatelessWidget {
   const EditNotesPage({
     super.key,
     required this.title,
