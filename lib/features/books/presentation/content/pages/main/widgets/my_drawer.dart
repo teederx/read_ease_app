@@ -23,6 +23,44 @@ class MyDrawer extends ConsumerWidget {
     final completedNum =
         bookListState.value!.where((book) => book.isCompleted).toList().length;
     final totalNum = bookListState.value!.length;
+<<<<<<< HEAD
+
+    Future<void> dialog() async {
+      return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog.adaptive(
+            title: const Text('Warning!'),
+            icon: const Icon(
+              Icons.warning_rounded,
+              color: AppColors.primaryColor,
+            ),
+            content: const Text('Do you want to Logout?'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  //Logout user
+                  await ref.read(authUseCaseProvider).signOut();
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context);
+                  //delete user from local database to save space
+                  await ref.read(userUsecaseProvider).deleteUser();
+                },
+                child: const Text('Yes'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+=======
+>>>>>>> d2a75d37d56767dbb81bc525988f344307ea5f4e
 
     return Drawer(
       child: ListView(
@@ -123,10 +161,8 @@ class MyDrawer extends ConsumerWidget {
             onTap: () async {
               //sync user data to cloud
               await ref.read(authUseCaseProvider).syncProfileToCloud();
-              //Logout user
-              await ref.read(authUseCaseProvider).signOut();
-              //delete user from local database to save space
-              await ref.read(userUsecaseProvider).deleteUser();
+              //confirm user logout
+              dialog();
             },
           ),
         ],

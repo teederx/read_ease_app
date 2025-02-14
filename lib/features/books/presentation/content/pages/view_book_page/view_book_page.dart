@@ -1,6 +1,9 @@
 import 'dart:convert';
+<<<<<<< HEAD
+=======
 
 import 'package:flutter_quill/quill_delta.dart';
+>>>>>>> d2a75d37d56767dbb81bc525988f344307ea5f4e
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,8 +28,11 @@ class ViewBookPage extends ConsumerWidget {
       getABookProvider(bookId),
     );
 
+<<<<<<< HEAD
+=======
     final notes = Delta.fromJson(jsonDecode(mybook.notes));
 
+>>>>>>> d2a75d37d56767dbb81bc525988f344307ea5f4e
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -36,7 +42,15 @@ class ViewBookPage extends ConsumerWidget {
             onPressed: () {
               context.pushNamed(
                 RouteNames.editNotes,
+<<<<<<< HEAD
+                extra: [
+                  mybook.bookID,
+                  mybook.title,
+                  mybook.notes,
+                ],
+=======
                 extra: notes,
+>>>>>>> d2a75d37d56767dbb81bc525988f344307ea5f4e
               );
             },
             icon: const Icon(Icons.edit_rounded),
@@ -117,7 +131,11 @@ class ViewBookPage extends ConsumerWidget {
                               ? 'Completed'
                               : 'Currently Reading',
                           style: TextStyle(
+<<<<<<< HEAD
+                            fontSize: 10.sp,
+=======
                             fontSize: 13.sp,
+>>>>>>> d2a75d37d56767dbb81bc525988f344307ea5f4e
                             fontWeight: FontWeight.w600,
                             color: AppColors.secondaryColor,
                           ),

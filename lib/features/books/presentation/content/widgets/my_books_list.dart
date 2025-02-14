@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,9 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:read_ease_app/config/router/route.dart';
 
-import '../../../../../core/constants/app_colors.dart';
 import '../../../data/models/book/book.dart';
-import '../providers/book_list_provider/book_list_provider.dart';
+import 'book_tiles.dart';
 
 class MyBooksList extends StatefulWidget {
   const MyBooksList({

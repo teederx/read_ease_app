@@ -5,7 +5,10 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:flutter_quill/quill_delta.dart';
 import 'package:read_ease_app/features/books/presentation/content/widgets/no_data.dart';
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> d2a75d37d56767dbb81bc525988f344307ea5f4e
 class ViewNotes extends StatefulWidget {
   const ViewNotes({
     super.key,
@@ -44,10 +47,22 @@ class _ViewNotesState extends State<ViewNotes> {
     Delta delta = Delta.fromJson(jsonDecode(exampleNote));
 
     bool hasData = false;
+<<<<<<< HEAD
+    //Check if notes is empty or has data
+=======
+>>>>>>> d2a75d37d56767dbb81bc525988f344307ea5f4e
     if (widget.notes.isEmpty || widget.notes == '[]') {
       setState(() {
         hasData = false;
       });
+<<<<<<< HEAD
+    } else if (Delta.fromJson(jsonDecode(widget.notes)).length == 1 &&
+        Delta.fromJson(jsonDecode(widget.notes)).first.data == '\n') {
+      setState(() {
+        hasData = false;
+      });
+=======
+>>>>>>> d2a75d37d56767dbb81bc525988f344307ea5f4e
     } else {
       setState(() {
         hasData = true;
@@ -64,6 +79,10 @@ class _ViewNotesState extends State<ViewNotes> {
           child: Container(
             child: hasData
                 ? quill.QuillEditor.basic(
+<<<<<<< HEAD
+                    scrollController: _scrollController,
+=======
+>>>>>>> d2a75d37d56767dbb81bc525988f344307ea5f4e
                     controller: quill.QuillController(
                       document: document,
                       selection: const TextSelection.collapsed(offset: 0),

@@ -106,7 +106,9 @@ GoRouter router(Ref ref) {
             builder: (context, state) {
               final notes = state.extra as Delta;
               return EditNotesPage(
-                notes: notes,
+                notes: data[2],
+                title: data[1],
+                bookId: data[0],
               );
             },
           ),
