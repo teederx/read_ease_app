@@ -54,8 +54,8 @@ class UserRepo extends UserRepository {
   }
 
   @override
-  Future<List<Book>> getAllBooksOfUser() async {
-    return await localDataSource.getAllBooksOfUser(userId: uid);
+  Future<List<Book>> getAllBooksOfUser() async{
+    return  await localDataSource.getAllBooksOfUser(userId: uid);
   }
 
   @override

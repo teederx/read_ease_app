@@ -51,6 +51,7 @@ class _MyBooksListState extends State<MyBooksList> {
             final myBook = widget.books[index];
             final bookID = myBook.bookID;
             final image = myBook.imageURL;
+
             return BookTiles(
               myBook: myBook,
               image: image,

@@ -23,7 +23,7 @@ class MyDrawer extends ConsumerWidget {
     final completedNum =
         bookListState.value!.where((book) => book.isCompleted).toList().length;
     final totalNum = bookListState.value!.length;
-
+    
     Future<void> dialog() async {
       return await showDialog(
         context: context,

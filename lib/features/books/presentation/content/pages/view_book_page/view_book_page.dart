@@ -22,7 +22,6 @@ class ViewBookPage extends ConsumerWidget {
     final mybook = ref.watch(
       getABookProvider(bookId),
     );
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
